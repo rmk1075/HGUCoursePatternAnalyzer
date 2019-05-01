@@ -37,13 +37,13 @@ public class HGUCoursePatternAnalyzer {
 		
 		System.out.println("Number of All Students: " + numOfStudents);
 		for(Student student: students) {
-			System.out.println(student.getName());
+			if(student != null)	System.out.println(student.getName());
 		}
 		
 		courses = initiateCourseArrayFromLines(lines);
 		System.out.println("Number of All Courses: " + numOfCourses);
 		for(Course course: courses) {
-			System.out.println(course.getCourseName());
+			if(course != null) System.out.println(course.getCourseName());
 		}
 		
 	}
@@ -56,9 +56,19 @@ public class HGUCoursePatternAnalyzer {
 	private Student[] initiateStudentArrayFromLines(String[] lines) {
 		
 		// TODO: implement this method
+		Student[] init_stu = new Student[lines.length];
 		
+		for(int i = 0; i < lines.length; i++) {
+			String name = lines[i].split(",")[1].trim();
+			
+			if(studentExist(init_stu, new Student(name))) {
+				init_stu[i] = null;
+			} else {
+				init_stu[i] = new Student(name);
+			}
+		}
 		
-		return null;
+		return init_stu;
 	}
 
 	/**
@@ -69,8 +79,13 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private boolean studentExist(Student[] students, Student student) {
 		
-		// TODO: implement this method
-
+		// TODO: implement this method		
+		for(Student stu : students) {
+			if(stu != null && stu.getName().equals(student.getName())) {
+				return true;
+			}
+		}
+		
 		return false;
 	}
 	
@@ -82,8 +97,19 @@ public class HGUCoursePatternAnalyzer {
 	private Course[] initiateCourseArrayFromLines(String[] lines) {
 		
 		// TODO: implement this method
+		Course[] init_cou = new Course[lines.length];
 		
-		return null;
+		for(int i = 0; i < lines.length; i++) {
+			String course_name = lines[i].split(",")[2].trim();
+			
+			if(courseExist(init_cou, new Course(course_name))) {
+				init_cou[i] = null;
+			} else {
+				init_cou[i] = new Course(course_name);
+			}
+		}
+		
+		return init_cou;
 	}
 
 	/**
@@ -95,7 +121,12 @@ public class HGUCoursePatternAnalyzer {
 	private boolean courseExist(Course[] courses, Course course) {
 		
 		// TODO: implement this method
-
+		for(Course cou : courses) {
+			if(cou != null && cou.getCourseName().equals(course.getCourseName())) {
+				return true;
+			}	
+		}
+		
 		return false;
 	}
 
